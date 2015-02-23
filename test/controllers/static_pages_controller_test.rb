@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   def setup
-    @base_title = "| Ruby on Rails Tutorial Sample App"
+    @base_title = "| Utility Corner App"
  end
 
   test "should get home" do
@@ -23,4 +23,9 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_select "title", "About #{@base_title}"
   end
 
+  test "should get contact" do
+    get :contact
+    assert_response :success
+    assert_select "title", "Contact the #{@base_titile}	"
+  end
 end
