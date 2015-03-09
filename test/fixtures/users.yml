@@ -4,5 +4,9 @@
 #  name: MyString
 #  email: MyString
 
+doel:
+  name: Doel Example
+  email: doel@example.com
+  password_digest: <%= User.digest('password') %>
 
 
