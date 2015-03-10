@@ -8,11 +8,12 @@ module SessionsHelper
     #@current_user ||= User.find_by(id: session[:user_id])
     if ( user_id = session[:user_id])
       @current_user = User.find_by(id: user_id)
-    elsif ( user_id = cookie.signed[:user_id])
+    elsif ( user_id = cookies.signed[:user_id])
       user = User.find_by(id: user_id)
-       if user && user.authenticate?(cookie[:remember_token])
+       if user && user.authenticated?(cookies[:remember_token])
        login user
        @current_user = user
+       end
     end
   end
   
@@ -22,8 +23,8 @@ module SessionsHelper
   
   def remember(user)
     user.remember
-    cookie.permanent.signed[:user_id] = user.id
-    cookie.permanent[:remember_token] = user.remember_token
+    cookies.permanent.signed[:user_id] = user.id
+    cookies.permanent[:remember_token] = user.remember_token
   end
 
   def logout
@@ -34,8 +35,8 @@ module SessionsHelper
   
   def forget(user)
     user.forget
-    cookie[:user_id].delete
-    cookie[:remember_token].delete
+    cookies.delete([:user_id])
+    cookies.delete([:remember_token])
   end
 
 end

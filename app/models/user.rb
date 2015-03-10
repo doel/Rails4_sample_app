@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accsessor :remember_token
+  attr_accessor :remember_token
   before_save { self.email = email.downcase }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\.-]+\.[a-z]+\z/i
   validates :name, presence: true, length: {maximum: 50}
@@ -8,24 +8,24 @@ class User < ActiveRecord::Base
   validates :password, presence: true, length: {minimum: 6}
 
 # encryption of the string
-  def User.digest (string)
+  def User.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
   #retunrs a random token
   def User.new_token
-   SecureRandom.self_base64
+   SecureRandom.urlsafe_base64
   end
 
   #saves the encrpted token in remember_digest in db
   def remember
     self.remember_token = User.new_token
     update_attribute(:remember_digest, User.digest(remember_token))
- end
+  end
   
   #returns true if the remember_token in the cookie matched the remember_digest in db
-  def is_authenticated?(remember_token)
+  def authenticated?(remember_token)
     return false if remember_token.nil?
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
