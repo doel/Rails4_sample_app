@@ -1,4 +1,4 @@
-require "pry"
+#require "pry"
 
 class User < ActiveRecord::Base
   attr_accessor :remember_token

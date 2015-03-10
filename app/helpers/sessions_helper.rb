@@ -1,4 +1,4 @@
-require 'pry'
+#require 'pry'
 module SessionsHelper
 
   def login user
