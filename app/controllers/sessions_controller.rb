@@ -18,10 +18,6 @@ class SessionsController < ApplicationController
 
   def destroy
      logout if logged_in?
-    if session[:user_id].nil?
-      redirect_to root_url
-    else
-     flash.now[:danger] = "Logout unseccessful. please try again"
-    end
+     redirect_to root_url
   end
 end

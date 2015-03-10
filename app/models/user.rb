@@ -1,3 +1,5 @@
+require "pry"
+
 class User < ActiveRecord::Base
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
@@ -27,7 +29,8 @@ class User < ActiveRecord::Base
   #returns true if the remember_token in the cookie matched the remember_digest in db
   def authenticated?(remember_token)
     return false if remember_token.nil?
-    BCrypt::Password.new(remember_digest).is_password?(remember_token)
+    #pry.binding
+    BCrypt::Password.create(remember_digest).is_password?(remember_token)
   end
 
   def forget
