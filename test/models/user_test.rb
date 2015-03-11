@@ -44,4 +44,9 @@ class UserTest < ActiveSupport::TestCase
       assert_not @user.valid?, "#{invalid_address.inspect} should be invalid"
     end
    end
+
+  test "authenticated? should be false if digest is nil" do
+    assert_not @user.authenticated?(nil)
+    assert_not @user.authenticated?('')
+  end
 end

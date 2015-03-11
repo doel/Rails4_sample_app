@@ -28,8 +28,14 @@ class User < ActiveRecord::Base
   
   #returns true if the remember_token in the cookie matched the remember_digest in db
   def authenticated?(remember_token)
-    return false if remember_token.nil?
+    
+    return false if remember_token.blank? 
     #pry.binding
+    
+    #BCrypt::Password.new will fail with invalid_hash as the new hash not having the valid_hash? coming tru for BCrypt gem.
+    #It should be passed all the params as in cost and salt, so that it can be successfully be parsed. Otherwise use create.
+    #https://github.com/codahale/bcrypt-ruby/blob/master/lib/bcrypt/password.rb
+    # alias is_password, :== 
     BCrypt::Password.create(remember_digest).is_password?(remember_token)
   end
 
