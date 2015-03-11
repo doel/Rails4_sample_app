@@ -39,13 +39,17 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     assert_select "a[href=?]", logout_path,      count: 0
   end
   
-  test 'to verify remember me is checked or not in the login page' do
-    logged_in_as(@user, remember_token: '1')
-    assert_not_nil cookies['remember_token']
+
+  
+   test "login with remembering" do
+    log_in_as(@user, remember_me: '1')
+    #assert_equal assigns(:user).FILL_IN, FILL_IN
   end
   
-  test 'to verify remember me is not checked in the login page' do
-    logged_in_as(@user, remember_token: '0')
-    assert_nil cookies['remember_token']
+  test "login without remembering" do
+    log_in_as(@user, remember_me: '0')
+    assert_nil cookies[:remember_token]
   end
+  
+
 end

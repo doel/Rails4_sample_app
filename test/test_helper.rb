@@ -15,7 +15,7 @@ class ActiveSupport::TestCase
    !session[:user_id].nil?
   end
   
-  def logged_in_as(user, options={})
+  def log_in_as(user, options={})
     remember_token = options[:remember_token] || '1'
     password = options[:password] || 'password'
     if integration_test?
