@@ -1,9 +1,11 @@
 #require "pry"
 
 class User < ActiveRecord::Base
-  attr_accessor :remember_token, :activation_token
+  attr_accessor(:remember_token, :activation_token)
   before_save :downcase_email 
   before_create :create_activation_digest
+  
+  
   
   
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\.-]+\.[a-z]+\z/i
@@ -31,22 +33,24 @@ class User < ActiveRecord::Base
   
   #returns true if the remember_token in the cookie matched the remember_digest in db
   def authenticated?(attribute, token)
+    
     digest = send("#{attribute}_digest")
-    return false if token.blank? 
-    #pry.binding
+    
+    return false if digest.blank? 
+    #ry.binding
     
     #BCrypt::Password.new will fail with invalid_hash as the new hash not having the valid_hash? coming tru for BCrypt gem.
     #It should be passed all the params as in cost and salt, so that it can be successfully be parsed. Otherwise use create.
     #https://github.com/codahale/bcrypt-ruby/blob/master/lib/bcrypt/password.rb
     # alias is_password, :== 
-    BCrypt::Password.create(digest).is_password?(token)
+    BCrypt::Password.new(digest).is_password?(token)
   end
 
   def forget
     update_attribute(:remember_digest, nil)
   end
 
-  private
+  #private
   
   def downcase_email
     self.email = email.downcase 
@@ -54,7 +58,7 @@ class User < ActiveRecord::Base
 
   def create_activation_digest
     self.activation_token =  User.new_token
-    self.activation_digest = User.digest(activation_token)
+    self.activation_digest = User.digest(self.activation_token)
   end
 
 end
