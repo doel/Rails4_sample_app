@@ -74,7 +74,6 @@ class User < ActiveRecord::Base
 
   def create_activation_digest
     self.activation_token =  User.new_token
-    puts "Here goe the activation_token from model ===#{activation_token.inspect}"
     self.activation_digest = User.digest(self.activation_token)
   end
 

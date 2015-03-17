@@ -17,7 +17,6 @@ class UsersController < ApplicationController
 
   def create
     @user  = User.create(user_params)
-    puts "user created ====#{@user.inspect}"
     if @user.save
       UserMailer.account_activation(@user).deliver_now
       flash[:info] = "Please check your email to activate your account."

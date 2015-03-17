@@ -25,13 +25,12 @@ class PasswordResetsController < ApplicationController
   end
   
   def update
-    puts"user_params====#{user_params.inspect}"
+    
     if password_blank?
       puts "11111111"
       flash.now[:danger] = "Password can't be blank"
       render 'edit'
     elsif @user.update_attributes(user_params)
-    puts "11111111"
       login @user
       flash[:success] = "#{@user.name}, your password has been reset successfully."
       redirect_to @user
@@ -53,7 +52,7 @@ class PasswordResetsController < ApplicationController
   end
   
   def check_expiration
-    puts "token expiration in controllers ===#{@user.inspect}"
+    
     if @user.password_token_expired?
       flash[:danger] = "Password Token has expired, click on reset password & try with the new token."
       redirect_to root_url

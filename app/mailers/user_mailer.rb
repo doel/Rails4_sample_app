@@ -18,8 +18,6 @@ class UserMailer < ApplicationMailer
   #
   def password_reset(user)
     @user = user
-    @password_reset_token = @user.password_reset_token
-    puts "password_reset_token from UserMailer ===#{@password_reset_token.inspect}"
     mail to: user.email, subject: "Password Reset"
   end
 end
