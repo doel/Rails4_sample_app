@@ -18,6 +18,12 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
   host = 'https://rails-tutorial-doel.c9.io'
   config.action_mailer.default_url_options = { host: host }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  :address => "localhost",
+  :port => 25,
+  :domain => "whatever.com",
+  }
 
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
