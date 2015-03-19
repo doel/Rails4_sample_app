@@ -1,4 +1,4 @@
-require 'pry'
+#require 'pry'
 require 'test_helper'
 
 class UsersSignupTest < ActionDispatch::IntegrationTest
@@ -30,7 +30,7 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     end
     assert_equal 1, ActionMailer::Base.deliveries.size
     user = assigns(:user)
-    binding.pry
+    #binding.pry
     assert_not user.activated?
     #Try to login before activation
     log_in_as(user)
